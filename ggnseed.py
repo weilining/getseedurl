@@ -1,26 +1,35 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 __author__ = 'admin'
 import requests  # 用于获取网页
 from bs4 import BeautifulSoup  # 用于解析网页
 from qbittorrent import Client
 
+# 替换成自己的qbWbe地址
+clientUrl = ''
+# 替换成自己的username
+clientUserName = ''
+# 替换成自己的password
+clientPassWord = ''
+# 替换成自己的user_agent
+user_agent = ''
+# 替换成自己的cookie
+cookie = ''
+savePath = '/Users/admin/Downloads/ggn'
+
 
 def fun():
-    qb = Client('http://127.0.0.1:8081/')
-    qb.login('admin', 'your-secret-password')
-    print(qb.qbittorrent_version)
-    savePath = '/Users/admin/Downloads/ggn'
+    qb = Client(clientUrl)
+    qb.login(clientUserName, clientPassWord)
+    # print(qb.qbittorrent_version)
     # qb.download_from_link(link, paused=True, savepath=savePath, skip_checking=False)
-    user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
-    # 替换成自己的cookie
-    cookie = ''
+
     headers = {
         'User-Agent': user_agent,
         'Cookie': cookie
     }
     i = 1
-    page = 25+3
+    page = 25 + 3
     linkList = []
     while i <= page:
         urlAddr = 'https://gazellegames.net/'
@@ -41,13 +50,13 @@ def fun():
             j += 1
         if linkList.__len__() > 2100:
             break
-        # print(i,j,list.__len__())
+        print(i, j, linkList.__len__())
         i += 1
     try:
         qb.download_from_link(linkList, paused=True, savepath=savePath, skip_checking=False)
     except Exception as e:
         print(e, 'error')
-    # print(i, list.__len__())
+    print(i, linkList.__len__())
 
 
 if __name__ == '__main__':
